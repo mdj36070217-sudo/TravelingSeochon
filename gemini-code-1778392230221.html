@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서촌 인문학 기행 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1A2D4A; --amber: #B85C00; --amberL:#FDF0E4; --bg: #FAFAF7;
+            --text: #1A1917; --muted: #7A776E; --line: #E2DFD7; --card: #F4F2EC;
+            --blue: #185FA5; --blueL:#E6F1FB; --green: #0F6E56; --greenL:#E1F5EE;
+            --serif: 'Noto Serif KR', serif; --sans: 'Noto Sans KR', sans-serif; --r: 8px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--sans); background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* 히어로 섹션 */
+        .hero { background: var(--navy); padding: 40px 20px; text-align: center; color: #fff; }
+        .hero-title { font-family: var(--serif); font-size: 24px; margin-bottom: 8px; }
+
+        /* 사이드바 & 컨텐츠 레이아웃 */
+        .main-container { display: flex; flex: 1; flex-direction: column; }
+        @media (min-width: 769px) {
+            .main-container { flex-direction: row; }
+            .tab-nav { width: 240px; height: 100vh; position: sticky; top: 0; flex-direction: column !important; border-right: 1px solid var(--line); border-bottom: none !important; }
+        }
+
+        .tab-nav { display: flex; background: #fff; border-bottom: 1px solid var(--line); overflow-x: auto; sticky; top: 0; z-index: 10; }
+        .tn { flex: 0 0 auto; padding: 15px 20px; border: none; background: none; cursor: pointer; color: var(--muted); text-align: left; font-weight: 500; transition: 0.2s; }
+        .tn.on { color: var(--navy); border-left: 4px solid var(--amber); background: var(--amberL); }
+
+        .tab-content { display: none; padding: 20px; max-width: 800px; margin: 0 auto; width: 100%; }
+        .tab-content.on { display: block; }
+
+        /* 미션 카드 & 업로드 스타일 */
+        .mc { border: 1px solid var(--line); border-radius: var(--r); padding: 16px; margin-bottom: 15px; background: #fff; }
+        .upload-wrapper { margin-top: 12px; }
+        .upload-label { display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px dashed var(--line); padding: 15px; cursor: pointer; border-radius: var(--r); font-size: 13px; color: var(--muted); }
+        .preview-img { width: 100%; height: auto; border-radius: var(--r); margin-top: 10px; display: none; border: 1px solid var(--line); }
+        .ans-input { width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 10px; margin-top: 8px; font-family: var(--sans); }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-title">서촌 인문학 기행 2026</div>
+    <p style="font-size: 13px; opacity: 0.8;">사대부중 · 대곡중 · 시지고 연합 활동지</p>
+</div>
+
+<div class="main-container">
+    <nav class="tab-nav">
+        <button class="tn on" onclick="switchTab('guide', this)">🚩 여행 안내</button>
+        <button class="tn" onclick="switchTab('mission', this)">📜 미션 여정</button>
+        <button class="tn" onclick="switchTab('safety', this)">⚠️ 안전 지도</button>
+    </nav>
+
+    <div class="tab-content on" id="tab-guide">
+        <h2>오늘의 일정 [cite: 17]</h2>
+        <div class="mc">
+            <p>07:00 동대구역 출발 [cite: 17]</p>
+            <p>10:30 과학책방 갈다 탐방 [cite: 17, 62]</p>
+            <p>12:30 통인시장 점심 식사 [cite: 17, 73]</p>
+            <p>15:00 서촌 도보 탐방 [cite: 17, 113]</p>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab-mission">
+        <h2>미션 수행</h2>
+        
+        <div class="mc">
+            <h3>미션 1. 과학책방 갈다 [cite: 62]</h3>
+            <p class="fs12">강연 중 인상 깊었던 키워드 3개를 적어주세요. [cite: 71]</p>
+            <input type="text" class="ans-input" placeholder="키워드 입력">
+            <div class="upload-wrapper">
+                <label class="upload-label" for="up-m1">📷 책방 인문학 장면 촬영</label>
+                <input type="file" id="up-m1" class="upload-input" style="display:none" accept="image/*" onchange="previewImage(this)">
+                <img src="" class="preview-img">
+            </div>
+        </div>
+
+        <div class="mc">
+            <h3>미션 4. 서촌 탐방 [cite: 112]</h3>
+            <p class="fs12">"오래된 것과 새로운 것이 공존하는 장면"을 기록하세요. [cite: 134]</p>
+            <div class="upload-wrapper">
+                <label class="upload-label" for="up-m4">📷 공존의 장면 업로드</label>
+                <input type="file" id="up-m4" class="upload-input" style="display:none" accept="image/*" onchange="previewImage(this)">
+                <img src="" class="preview-img">
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tab-safety">
+        <h2>안전 수칙 [cite: 28]</h2>
+        <div class="mc">
+            <ul>
+                <li>인솔교사와 2인 1조 이동 유지 [cite: 33, 35]</li>
+                <li>집결지: 경복궁역 3번 출구 [cite: 43]</li>
+                <li>비상시: 119 또는 인솔교사 연락 [cite: 46, 48]</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('on'));
+        document.querySelectorAll('.tn').forEach(b => b.classList.remove('on'));
+        document.getElementById('tab-' + tabId).classList.add('on');
+        btn.classList.add('on');
+    }
+
+    function previewImage(input) {
+        const preview = input.nextElementSibling;
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+</body>
+</html>
